@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="training.annotationbased.quoters"/>
+
+    <context:property-placeholder location="quotes.properties"/>
+
+    <bean id="shakeSpearQuoter" class="training.annotationbased.quoters.quoter.SheakSpearQuoter">
+        <property name="message" value="${sheakSpear}"/>
+    </bean>
+
+    <bean id="terminatorQuoter" class="training.annotationbased.quoters.quoter.TerminatorQuoter">
+        <property name="messages">
+            <list value-type="java.lang.String">
+                <value>I'll be back</value>
+                <value>Trust me</value>
+                <ref bean="astaLaVista"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="astaLaVista" class="java.lang.String">
+        <constructor-arg value="Asta la vista baby"/>
+    </bean>
+
+
+</beans>

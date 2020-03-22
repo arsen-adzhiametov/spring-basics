@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <bean id="shakeSpearQuoter" class="training.spring.quoter.SheakSpearQuoter">
+        <property name="message" value="${sheakSpear}"/>
+    </bean>
+
+    <bean id="terminatorQuoter" class="training.spring.quoter.TerminatorQuoter">
+    <property name="messages">
+            <list value-type="java.lang.String">
+                <value>I'll be back</value>
+                <value>Trust me</value>
+                <ref bean="astaLaVista"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="astaLaVista" class="java.lang.String">
+        <constructor-arg value="Asta la vista baby"/>
+    </bean>
+
+    <bean id="talkingRobot" class="training.spring.robot.TalkingRobotImpl" destroy-method="destroy" scope="prototype">
+        <property name="quoters">
+            <list value-type="training.spring.quoter.Quoter">
+                <ref bean="shakeSpearQuoter"/>
+                <ref bean="terminatorQuoter"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+    <bean class="training.spring.beanpostprocessor.RunThisMethodAnnotationBeanPostProcessor"/>
+    <bean class="training.spring.beanpostprocessor.TransactionalBeanPostProcessor"/>
+    <bean class="training.spring.beanpostprocessor.BenchmarkBeanPostProcessor"/>
+
+    <bean class="training.spring.beanfactorypostprocessor.DestroyMethodWarningLoggerBeanFactoryPostProcessor"/>
+    <bean class="training.spring.beanfactorypostprocessor.DeprecatedClassBeanFactoryPostProcessor"/>
+
+    <context:property-placeholder location="quotes.properties"/>
+
+</beans>
